@@ -1,0 +1,291 @@
+/* ═══════════════════════════════════════════════════════
+   DUNIS Auth — Login / Register
+   ═══════════════════════════════════════════════════════ */
+
+/* Layout */
+.auth-layout {
+  display: flex;
+  min-height: 100vh;
+  background: #0d0d0d;
+}
+
+/* ── Left Panel ─────────────────────────────────────── */
+.auth-left {
+  width: 420px;
+  min-height: 100vh;
+  background: linear-gradient(160deg, #0d0d0d 0%, #1a1a1a 100%);
+  border-right: 1px solid rgba(208,170,49,.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 36px;
+  flex-shrink: 0;
+}
+.auth-left-inner {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  max-width: 320px;
+  width: 100%;
+}
+
+/* Logo */
+.auth-logo-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: white;
+  border-radius: 10px;
+  padding: 8px 18px;
+  margin-bottom: 22px;
+  align-self: flex-start;
+}
+.auth-logo-img {
+  height: 38px;
+  width: auto;
+  object-fit: contain;
+  display: block;
+}
+
+.auth-brand-title {
+  font-size: 2rem;
+  font-weight: 800;
+  color: white;
+  line-height: 1.25;
+  margin-bottom: 10px;
+}
+.auth-brand-sub {
+  font-size: .875rem;
+  color: rgba(255,255,255,.45);
+  line-height: 1.7;
+  margin-bottom: 32px;
+}
+
+.auth-info-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 28px;
+}
+.auth-info-card {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 16px;
+  background: rgba(255,255,255,.04);
+  border: 1px solid rgba(255,255,255,.06);
+  border-radius: 12px;
+}
+.auth-info-card i {
+  font-size: 1.1rem;
+  color: var(--gold);
+  width: 22px;
+  text-align: center;
+  flex-shrink: 0;
+}
+.auth-info-label {
+  font-weight: 700;
+  font-size: .85rem;
+  color: white;
+  margin-bottom: 2px;
+}
+.auth-info-desc {
+  font-size: .75rem;
+  color: rgba(255,255,255,.4);
+}
+
+.auth-campus-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.auth-campus-badge {
+  background: rgba(208,170,49,.1);
+  border: 1px solid rgba(208,170,49,.25);
+  color: rgba(208,170,49,.85);
+  font-size: .72rem;
+  font-weight: 600;
+  padding: 4px 12px;
+  border-radius: 999px;
+}
+
+/* ── Right Panel ────────────────────────────────────── */
+.auth-right {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 24px;
+  background: #f8f9fa;
+}
+.auth-form-wrap {
+  width: 100%;
+  max-width: 440px;
+  background: white;
+  border-radius: 20px;
+  padding: 40px;
+  box-shadow: 0 8px 48px rgba(0,0,0,.1);
+}
+
+.auth-form-logo {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 24px;
+}
+.auth-form-logo-img {
+  height: 44px;
+  width: auto;
+  object-fit: contain;
+}
+
+.auth-form-title {
+  font-size: 1.7rem;
+  font-weight: 800;
+  color: #0d0d0d;
+  text-align: center;
+  margin-bottom: 6px;
+}
+.auth-form-sub {
+  font-size: .875rem;
+  color: #6b7280;
+  text-align: center;
+  margin-bottom: 28px;
+}
+
+/* Form fields */
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+.auth-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.auth-field label {
+  font-size: .82rem;
+  font-weight: 700;
+  color: #374151;
+}
+.auth-input-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+.auth-input-icon {
+  position: absolute;
+  left: 14px;
+  color: #9ca3af;
+  font-size: .9rem;
+  pointer-events: none;
+  z-index: 1;
+}
+.auth-input-wrap input {
+  width: 100%;
+  height: 48px;
+  padding: 0 44px 0 42px;
+  border: 1.5px solid #e5e7eb;
+  border-radius: 10px;
+  font-family: var(--font-body);
+  font-size: .9rem;
+  color: #111;
+  background: #fafafa;
+  transition: all .2s;
+  outline: none;
+}
+.auth-input-wrap input:focus {
+  border-color: #d0aa31;
+  background: white;
+  box-shadow: 0 0 0 3px rgba(208,170,49,.1);
+}
+.auth-eye-btn {
+  position: absolute;
+  right: 12px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #9ca3af;
+  padding: 6px;
+  display: flex;
+  align-items: center;
+}
+.auth-eye-btn:hover { color: #374151; }
+
+.auth-submit-btn {
+  width: 100%;
+  height: 52px;
+  border: none;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #d0aa31, #e8c56a);
+  color: #0d0d0d;
+  font-family: var(--font-body);
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  transition: all .25s;
+  box-shadow: 0 4px 18px rgba(208,170,49,.35);
+  margin-top: 6px;
+}
+.auth-submit-btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 28px rgba(208,170,49,.5);
+}
+.auth-submit-btn:disabled { opacity: .7; cursor: not-allowed; }
+
+.auth-footer-note {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 20px;
+  padding: 12px 16px;
+  background: rgba(208,170,49,.06);
+  border: 1px solid rgba(208,170,49,.18);
+  border-radius: 10px;
+  font-size: .78rem;
+  color: #7a5c10;
+  line-height: 1.55;
+}
+.auth-footer-note i { color: var(--gold); flex-shrink: 0; }
+
+/* Register page specific */
+.auth-role-select {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 6px;
+}
+.auth-role-btn {
+  flex: 1;
+  padding: 12px;
+  border: 2px solid #e5e7eb;
+  border-radius: 10px;
+  background: white;
+  cursor: pointer;
+  text-align: center;
+  transition: all .2s;
+  font-family: var(--font-body);
+}
+.auth-role-btn.active {
+  border-color: #d0aa31;
+  background: rgba(208,170,49,.06);
+}
+.auth-role-btn h3 { font-size: .875rem; font-weight: 700; color: #111; margin-bottom: 3px; }
+.auth-role-btn p  { font-size: .72rem; color: #6b7280; }
+
+/* Responsive */
+@media (max-width: 768px) {
+  .auth-left { display: none; }
+  .auth-right { background: #0d0d0d; }
+  .auth-form-wrap { background: #1a1a1a; box-shadow: none; border: 1px solid rgba(255,255,255,.08); }
+  .auth-form-title { color: white; }
+  .auth-form-sub { color: rgba(255,255,255,.5); }
+  .auth-field label { color: rgba(255,255,255,.8); }
+  .auth-input-wrap input { background: rgba(255,255,255,.06); border-color: rgba(255,255,255,.1); color: white; }
+  .auth-input-wrap input:focus { border-color: var(--gold); background: rgba(255,255,255,.08); }
+  .auth-input-wrap input::placeholder { color: rgba(255,255,255,.3); }
+  .auth-footer-note { background: rgba(208,170,49,.08); }
+}

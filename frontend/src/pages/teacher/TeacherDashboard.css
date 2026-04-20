@@ -1,0 +1,69 @@
+/* TeacherDashboard.css */
+.teacher-dash { display: flex; flex-direction: column; gap: 26px; }
+
+.teacher-banner {
+  background: linear-gradient(135deg, #0d1f3c 0%, #0f2a4a 100%);
+  border-radius: var(--radius-xl); padding: 32px 36px;
+  display: flex; align-items: center; justify-content: space-between; gap: 24px;
+}
+.t-role-pill { display: inline-block; font-size: .7rem; font-weight: 700; text-transform: uppercase; letter-spacing: .12em; color: var(--gold); background: var(--gold-pale); border: 1px solid rgba(200,168,75,.3); border-radius: var(--radius-full); padding: 3px 10px; margin-bottom: 8px; }
+.teacher-banner h1 { font-size: 1.7rem; color: white; margin-bottom: 6px; }
+.teacher-banner p  { color: rgba(255,255,255,.6); font-size: .9rem; }
+
+.t-stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+.t-stat { padding: 20px; display: flex; align-items: center; gap: 12px; position: relative; border-left: 3px solid var(--c, var(--gold)); }
+.t-stat-icon { width: 44px; height: 44px; border-radius: 11px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.t-stat-val  { font-family: var(--font-display); font-size: 1.5rem; font-weight: 700; color: var(--navy); }
+.t-stat-lbl  { font-size: .75rem; color: var(--gray-600); font-weight: 500; }
+.urgent-dot  { position: absolute; top: 12px; right: 12px; width: 8px; height: 8px; border-radius: 50%; background: var(--orange); animation: blink 1.5s infinite; }
+@keyframes blink { 0%,100%{opacity:1;} 50%{opacity:.3;} }
+
+.t-grid { display: grid; grid-template-columns: 1fr 320px; gap: 24px; }
+.t-section-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
+.t-section-header h2 { font-size: 1.05rem; color: var(--navy); }
+.see-all { display: flex; align-items: center; gap: 4px; font-size: .8rem; font-weight: 600; color: var(--gold); }
+
+.t-courses-list { display: flex; flex-direction: column; gap: 8px; }
+.t-course-row { display: flex; align-items: center; gap: 12px; padding: 14px 16px; text-decoration: none; color: inherit; }
+.t-course-icon { width: 40px; height: 40px; background: var(--blue-pale); border-radius: 10px; display: flex; align-items: center; justify-content: center; color: var(--blue); flex-shrink: 0; }
+.t-course-info { flex: 1; min-width: 0; }
+.t-course-info h3 { font-size: .9rem; color: var(--navy); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.t-course-meta { font-size: .75rem; color: var(--gray-600); }
+.t-course-right { display: flex; align-items: center; gap: 10px; }
+
+.t-meets-list { display: flex; flex-direction: column; gap: 10px; margin-bottom: 16px; }
+.t-meet-card { padding: 14px; }
+.t-meet-top  { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 4px; }
+.t-meet-title { font-size: .875rem; font-weight: 600; color: var(--navy); flex: 1; }
+.t-meet-course{ font-size: .75rem; color: var(--gray-600); margin-bottom: 4px; }
+.t-meet-time  { font-size: .72rem; color: var(--gray-400); display: flex; align-items: center; gap: 4px; }
+
+.t-submissions-list { display: flex; flex-direction: column; gap: 8px; }
+.t-submission-row { display: flex; align-items: center; gap: 10px; padding: 12px 14px; }
+.t-sub-avatar { width: 32px; height: 32px; border-radius: 50%; background: var(--gold); color: var(--navy); font-size: .75rem; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.t-sub-info { flex: 1; }
+.t-sub-name   { font-size: .85rem; font-weight: 600; color: var(--navy); }
+.t-sub-course { font-size: .72rem; color: var(--gray-600); }
+.t-sub-right  { display: flex; flex-direction: column; align-items: flex-end; gap: 3px; }
+.t-sub-time   { font-size: .7rem; color: var(--gray-400); }
+
+@media (max-width: 1024px) {
+  .t-stats { grid-template-columns: repeat(2, 1fr); }
+  .t-grid  { grid-template-columns: 1fr; }
+}
+@media (max-width: 640px) {
+  .teacher-banner { flex-direction: column; }
+  .t-stats { grid-template-columns: 1fr 1fr; }
+}
+
+/* DUNIS logo in teacher banner */
+.teacher-banner { position: relative; }
+.t-banner-logo {
+  position: absolute;
+  top: 20px;
+  right: 28px;
+  opacity: 0.18;
+  pointer-events: none;
+}
+.t-banner-logo img { height: 52px; width: auto; }
+@media (max-width: 640px) { .t-banner-logo { display: none; } }

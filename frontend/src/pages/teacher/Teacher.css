@@ -1,0 +1,46 @@
+/* Teacher.css - shared teacher styles */
+
+/* ── Course cards ──────────────────────────────────────────────────────── */
+.courses-grid-teacher { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; }
+.t-course-card { display: flex; flex-direction: column; overflow: hidden; border-radius: 14px; transition: transform .25s, box-shadow .25s; }
+.t-course-card:hover { transform: translateY(-4px); box-shadow: 0 10px 36px rgba(0,0,0,.12); }
+
+.t-cc-thumb { height: 180px; position: relative; overflow: hidden; background: linear-gradient(135deg, var(--navy), var(--navy-mid)); }
+.t-cc-thumb img { width: 100%; height: 100%; object-fit: cover; transition: transform .5s; }
+.t-course-card:hover .t-cc-thumb img { transform: scale(1.05); }
+.t-cc-placeholder { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; }
+.t-cc-status {
+  position: absolute; top: 12px; right: 12px;
+  display: inline-flex; align-items: center; gap: 5px;
+  padding: 4px 12px; border-radius: 999px;
+  font-size: .7rem; font-weight: 700;
+  backdrop-filter: blur(8px);
+}
+.t-cc-status.published { background: rgba(16,185,129,.9); color: white; }
+.t-cc-status.draft     { background: rgba(249,115,22,.9);  color: white; }
+
+.t-cc-body { padding: 18px; display: flex; flex-direction: column; gap: 10px; flex: 1; }
+.t-cc-badges { display: flex; gap: 6px; flex-wrap: wrap; }
+.t-cc-badge { display: inline-flex; align-items: center; gap: 4px; font-size: .68rem; font-weight: 700; padding: 3px 9px; border-radius: 999px; }
+.t-cc-badge--cat    { background: rgba(11,30,61,.08);  color: var(--navy); }
+.t-cc-badge--lvl    { background: rgba(59,130,246,.1); color: #1d4ed8; }
+.t-cc-badge--campus { background: rgba(208,170,49,.12); color: #7a5c10; }
+
+.t-cc-title { font-size: 1rem; font-weight: 700; color: var(--navy); line-height: 1.35; margin: 0; }
+.t-cc-desc  { font-size: .8rem; color: var(--gray-500); line-height: 1.5; margin: -4px 0 0; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.t-cc-stats { display: flex; gap: 14px; flex-wrap: wrap; margin-top: -2px; }
+.t-cc-stats span { font-size: .78rem; color: var(--gray-500); display: flex; align-items: center; gap: 5px; }
+.t-cc-stats i { font-size: .8rem; color: var(--gold); }
+
+.t-cc-actions { display: flex; gap: 7px; flex-wrap: wrap; padding-top: 12px; border-top: 1px solid var(--gray-200); margin-top: auto; }
+.t-cc-btn { display: inline-flex; align-items: center; gap: 5px; padding: 8px 14px; border-radius: 8px; font-family: var(--font-body); font-size: .8rem; font-weight: 600; cursor: pointer; border: none; transition: all .2s; text-decoration: none; white-space: nowrap; }
+.t-cc-btn--view    { background: var(--gray-100); color: var(--navy); }
+.t-cc-btn--view:hover { background: var(--gray-200); }
+.t-cc-btn--edit    { background: rgba(11,30,61,.08); color: var(--navy); }
+.t-cc-btn--edit:hover { background: var(--navy); color: white; }
+.t-cc-btn--publish   { background: var(--gold); color: var(--navy); }
+.t-cc-btn--publish:hover { background: #b8941f; }
+.t-cc-btn--unpublish { background: rgba(239,68,68,.1); color: #dc2626; }
+.t-cc-btn--unpublish:hover { background: #dc2626; color: white; }
+
+@media (max-width: 768px) { .courses-grid-teacher { grid-template-columns: 1fr; } }

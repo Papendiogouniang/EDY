@@ -1,0 +1,71 @@
+/* Classroom — complete styles */
+.classroom { display: flex; flex-direction: column; gap: 20px; max-width: 1100px; }
+
+/* Header */
+.cls-header { display: flex; align-items: flex-start; gap: 16px; flex-wrap: wrap; padding: 24px 28px; background: linear-gradient(135deg, var(--navy), var(--navy-mid)); border-radius: var(--radius-xl); color: white; }
+.cls-back { color: rgba(255,255,255,.7) !important; font-size: .85rem; font-weight: 600; text-decoration: none; display: flex; align-items: center; gap: 7px; padding: 8px 14px; border: 1px solid rgba(255,255,255,.2); border-radius: 8px; transition: all .2s; white-space: nowrap; align-self: flex-start; margin-top: 2px; }
+.cls-back:hover { background: rgba(255,255,255,.1); color: white !important; }
+.cls-header-info { flex: 1; min-width: 0; }
+.cls-badges { display: flex; gap: 7px; flex-wrap: wrap; margin-bottom: 10px; }
+.cls-badge { display: inline-flex; align-items: center; gap: 5px; background: rgba(255,255,255,.12); color: rgba(255,255,255,.85); border: 1px solid rgba(255,255,255,.18); padding: 4px 12px; border-radius: 999px; font-size: .72rem; font-weight: 600; }
+.cls-badge--gold { background: rgba(208,170,49,.18); border-color: rgba(208,170,49,.4); color: var(--gold-light); }
+.cls-title { font-size: clamp(1.2rem, 3vw, 1.7rem); color: white; font-weight: 700; margin-bottom: 4px; }
+.cls-subtitle { font-size: .83rem; color: rgba(255,255,255,.6); }
+.cls-header-actions { display: flex; gap: 8px; flex-wrap: wrap; align-self: flex-start; margin-top: 2px; }
+.cls-action-btn { display: inline-flex; align-items: center; gap: 7px; padding: 9px 18px; border-radius: 9px; font-family: var(--font-body); font-size: .85rem; font-weight: 600; cursor: pointer; border: 1.5px solid rgba(255,255,255,.25); background: rgba(255,255,255,.1); color: white; transition: all .2s; white-space: nowrap; text-decoration: none; }
+.cls-action-btn:hover { background: rgba(255,255,255,.2); }
+.cls-action-btn--outline { background: transparent; border-color: rgba(255,255,255,.35); }
+.cls-action-btn--gold { background: var(--gold); border-color: var(--gold); color: var(--navy) !important; font-weight: 700; box-shadow: 0 3px 12px rgba(208,170,49,.35); }
+.cls-action-btn--gold:hover { transform: translateY(-1px); box-shadow: 0 5px 18px rgba(208,170,49,.5); }
+
+/* Tabs */
+.cls-tabs { display: flex; gap: 4px; background: var(--white); border: 1px solid var(--gray-200); border-radius: var(--radius-md); padding: 5px; flex-wrap: wrap; }
+.cls-tab { display: flex; align-items: center; gap: 8px; padding: 10px 18px; border: none; border-radius: 10px; background: transparent; font-family: var(--font-body); font-size: .875rem; font-weight: 500; color: var(--gray-600); cursor: pointer; transition: var(--transition); white-space: nowrap; }
+.cls-tab i { font-size: .9rem; }
+.cls-tab:hover { background: var(--gray-100); color: var(--navy); }
+.cls-tab.active { background: var(--navy); color: white; font-weight: 600; }
+.cls-tab-badge { background: rgba(208,170,49,.2); color: var(--navy); font-size: .65rem; font-weight: 700; padding: 2px 8px; border-radius: 999px; border: 1px solid rgba(208,170,49,.3); }
+.cls-tab.active .cls-tab-badge { background: rgba(255,255,255,.2); color: white; border-color: rgba(255,255,255,.3); }
+
+/* Card */
+.cls-card { overflow: hidden; padding: 0; }
+.cls-tab-header { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px; }
+
+/* Students */
+.cls-students { display: flex; flex-direction: column; }
+.cls-student-row { display: flex; align-items: center; gap: 14px; padding: 13px 20px; border-bottom: 1px solid var(--gray-200); transition: background .15s; }
+.cls-student-row:last-child { border-bottom: none; }
+.cls-student-row:hover { background: rgba(208,170,49,.04); }
+.cls-student-avatar { width: 38px; height: 38px; border-radius: 50%; background: linear-gradient(135deg, var(--gold), var(--gold-light)); color: var(--navy); font-weight: 700; font-size: .8rem; display: flex; align-items: center; justify-content: center; flex-shrink: 0; letter-spacing: -.03em; }
+.cls-student-info { flex: 1; min-width: 0; }
+.cls-student-name  { font-weight: 600; font-size: .875rem; color: var(--navy); }
+.cls-student-email { font-size: .72rem; color: var(--gray-400); }
+.cls-student-id    { display: flex; flex-direction: column; gap: 3px; align-items: flex-start; min-width: 110px; }
+.cls-student-level { min-width: 90px; }
+.cls-student-progress { display: flex; align-items: center; gap: 8px; min-width: 130px; }
+.cls-student-pts   { min-width: 60px; display: flex; align-items: center; gap: 5px; }
+
+/* Lessons */
+.cls-lesson-form { padding: 22px; background: rgba(208,170,49,.04); border: 1px solid rgba(208,170,49,.18) !important; }
+.cls-lesson-row { display: flex; align-items: center; gap: 12px; padding: 13px 18px; }
+.cls-lesson-num { width: 28px; height: 28px; border-radius: 8px; background: var(--gray-100); color: var(--gray-500); font-size: .75rem; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.cls-lesson-icon { width: 34px; height: 34px; border-radius: 9px; background: var(--gray-100); display: flex; align-items: center; justify-content: center; font-size: 1rem; flex-shrink: 0; }
+.cls-lesson-info  { flex: 1; min-width: 0; }
+.cls-lesson-title { font-weight: 600; font-size: .9rem; color: var(--navy); margin-bottom: 4px; }
+.cls-lesson-meta  { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+
+/* Meets */
+.cls-meet-card { padding: 18px 20px; display: flex; align-items: center; gap: 16px; justify-content: space-between; flex-wrap: wrap; }
+.cls-meet-left { display: flex; align-items: flex-start; gap: 14px; flex: 1; min-width: 0; }
+.cls-meet-icon { width: 42px; height: 42px; border-radius: 12px; background: rgba(208,170,49,.12); color: var(--gold); display: flex; align-items: center; justify-content: center; font-size: 1.1rem; flex-shrink: 0; }
+.cls-meet-title { font-weight: 700; font-size: .925rem; color: var(--navy); margin-bottom: 4px; }
+.cls-meet-meta  { font-size: .78rem; color: var(--gray-500); display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+.cls-meet-actions { display: flex; gap: 8px; flex-wrap: wrap; flex-shrink: 0; }
+
+@media (max-width: 768px) {
+  .cls-header { padding: 18px 16px; }
+  .cls-header-actions { flex-wrap: wrap; width: 100%; }
+  .cls-tabs { flex-wrap: wrap; }
+  .cls-student-row { flex-wrap: wrap; }
+  .cls-meet-card { flex-direction: column; align-items: flex-start; }
+}

@@ -1,0 +1,30 @@
+.dunis-logo {
+  display: block;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
+/* Logo always shown in white pill container - no filter needed */
+
+/* Icon container — square, shows just the mark */
+.dunis-logo-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  border-radius: 8px;
+  background: white;
+  padding: 4px;
+  flex-shrink: 0;
+}
+
+/* Hover animation */
+.dunis-logo,
+.dunis-logo-icon {
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+a:hover .dunis-logo,
+a:hover .dunis-logo-icon {
+  opacity: 0.9;
+  transform: scale(1.02);
+}

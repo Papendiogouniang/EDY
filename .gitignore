@@ -1,0 +1,42 @@
+# Dependencies
+node_modules/
+.npm
+
+# Environment variables (NEVER commit these)
+.env
+.env.local
+.env.production
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Build output
+build/
+dist/
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+
+# Runtime
+.DS_Store
+Thumbs.db
+*.pid
+*.seed
+
+# Docker
+.docker/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+
+# Coverage
+coverage/
+
+# AWS
+*.pem
+*.key
+aws-credentials.json

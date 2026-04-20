@@ -1,0 +1,3 @@
+@echo off
+echo Starting DUNIS E-Learning Backend...
+npm run dev

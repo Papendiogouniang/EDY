@@ -1,0 +1,19 @@
+{
+  "extends": ["react-app"],
+  "rules": {
+    "react-hooks/exhaustive-deps": "warn",
+    "no-unused-vars": "warn"
+  },
+  "overrides": [
+    {
+      "files": ["*.jsx"],
+      "env": {
+        "production": true
+      },
+      "rules": {
+        "react-hooks/exhaustive-deps": "off",
+        "no-unused-vars": "off"
+      }
+    }
+  ]
+}

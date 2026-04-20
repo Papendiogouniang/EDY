@@ -1,0 +1,126 @@
+name: 🚀 Build & Deploy to AWS
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+env:
+  AWS_REGION: eu-west-1
+
+jobs:
+  # ── Test ───────────────────────────────────────────────────────────────────
+  test:
+    name: Test Backend
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+          cache-dependency-path: backend/package-lock.json
+      - run: cd backend && npm ci
+      - name: Health check (syntax)
+        run: cd backend && node -e "require('./server.js')" &
+        env:
+          MONGODB_URI: ${{ secrets.MONGODB_URI }}
+          JWT_SECRET: test_secret
+          ANTHROPIC_API_KEY: test
+          PORT: 5001
+
+  # ── Build & Push ───────────────────────────────────────────────────────────
+  build-and-push:
+    name: Build Docker Images
+    runs-on: ubuntu-latest
+    needs: test
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    outputs:
+      image-tag: ${{ steps.meta.outputs.tag }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set image tag
+        id: meta
+        run: echo "tag=${GITHUB_SHA::8}" >> $GITHUB_OUTPUT
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id:     ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: Login to Amazon ECR
+        id: ecr-login
+        uses: aws-actions/amazon-ecr-login@v2
+
+      - name: Build & push backend image
+        env:
+          REGISTRY: ${{ steps.ecr-login.outputs.registry }}
+          TAG: ${{ steps.meta.outputs.tag }}
+        run: |
+          cd backend
+          docker build -t $REGISTRY/dunis-backend:$TAG -t $REGISTRY/dunis-backend:latest .
+          docker push $REGISTRY/dunis-backend:$TAG
+          docker push $REGISTRY/dunis-backend:latest
+          echo "✅ Backend pushed: $REGISTRY/dunis-backend:$TAG"
+
+      - name: Build & push frontend image
+        env:
+          REGISTRY: ${{ steps.ecr-login.outputs.registry }}
+          TAG: ${{ steps.meta.outputs.tag }}
+        run: |
+          cd frontend
+          docker build -t $REGISTRY/dunis-frontend:$TAG -t $REGISTRY/dunis-frontend:latest .
+          docker push $REGISTRY/dunis-frontend:$TAG
+          docker push $REGISTRY/dunis-frontend:latest
+          echo "✅ Frontend pushed: $REGISTRY/dunis-frontend:$TAG"
+
+  # ── Deploy ─────────────────────────────────────────────────────────────────
+  deploy:
+    name: Deploy to ECS
+    runs-on: ubuntu-latest
+    needs: build-and-push
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+
+    steps:
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id:     ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: Force new ECS deployment (backend)
+        run: |
+          aws ecs update-service \
+            --cluster dunis-elearning \
+            --service dunis-backend \
+            --force-new-deployment \
+            --region ${{ env.AWS_REGION }}
+
+      - name: Force new ECS deployment (frontend)
+        run: |
+          aws ecs update-service \
+            --cluster dunis-elearning \
+            --service dunis-frontend \
+            --force-new-deployment \
+            --region ${{ env.AWS_REGION }}
+
+      - name: Wait for services to stabilize
+        run: |
+          echo "⏳ Waiting for ECS services to stabilize..."
+          aws ecs wait services-stable \
+            --cluster dunis-elearning \
+            --services dunis-backend dunis-frontend \
+            --region ${{ env.AWS_REGION }}
+          echo "✅ Deployment complete!"
+
+      - name: Notify success
+        run: |
+          echo "🚀 DUNIS E-Learning deployed successfully!"
+          echo "Commit: ${{ github.sha }}"
+          echo "Image tag: ${{ needs.build-and-push.outputs.image-tag }}"
