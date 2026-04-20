@@ -4,12 +4,14 @@
     "react-hooks/exhaustive-deps": "warn",
     "no-unused-vars": "warn"
   },
+  "env": {
+    "browser": true,
+    "es2020": true,
+    "node": true
+  },
   "overrides": [
     {
       "files": ["*.jsx"],
-      "env": {
-        "production": true
-      },
       "rules": {
         "react-hooks/exhaustive-deps": "off",
         "no-unused-vars": "off"
