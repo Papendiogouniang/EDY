@@ -45,7 +45,7 @@ DUNIS Africa E-Learning is a full-stack platform serving students, teachers, and
 | Progress tracking & completion % | ✅ | ✅ (view class) | ✅ |
 | Level system (Beginner→Expert) | ✅ | — | ✅ |
 | Certificates (auto-issued) | ✅ | — | ✅ |
-| AI chatbot (Claude) | ✅ | ✅ | ✅ |
+
 | Notifications (real-time) | ✅ | ✅ | ✅ |
 | User management | — | — | ✅ |
 
@@ -83,7 +83,7 @@ dunis-elearning/
 │   │   ├── learning.js        # Progress, assignments, quizzes, certificates, notifications
 │   │   ├── dashboard.js       # Student / Teacher / Admin dashboards
 │   │   ├── users.js           # Admin user management
-│   │   └── chatbot.js         # Claude AI assistant
+│   │   └── chatbot.js         # 
 │   ├── middleware/
 │   │   └── auth.js            # JWT protect + role authorize
 │   ├── utils/
