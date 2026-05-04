@@ -657,7 +657,7 @@ jobs:
 | `JWT_SECRET` | ✅ | JWT signing key (min 32 chars) | `random-long-string` |
 | `JWT_EXPIRE` | No | Token expiry | `7d` |
 | `ALLOWED_EMAIL_DOMAIN` | No | Email domain restriction | `dunis.africa` |
-| `ANTHROPIC_API_KEY` | ✅ | Claude AI key | `sk-ant-api03-...` |
+
 | `CLIENT_URL` | Yes | Frontend URL for CORS | `https://elearning.dunis.africa` |
 | `SMTP_HOST` | No | Email server | `smtp.gmail.com` |
 | `SMTP_USER` | No | Email address | `noreply@dunis.africa` |
