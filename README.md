@@ -29,7 +29,7 @@ DUNIS Africa E-Learning is a full-stack platform serving students, teachers, and
 - **Email domain**: Only `@dunis.africa` accounts can register/login
 - **Language**: All courses are taught in **English**
 - **Roles**: `student` | `teacher` | `admin` — each with a dedicated dashboard
-- **AI**: Claude-powered chatbot for academic assistance
+- 
 
 ---
 
