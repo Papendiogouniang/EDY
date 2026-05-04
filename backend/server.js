@@ -13,7 +13,11 @@ const app = express();
 app.use(helmet({ crossOriginResourcePolicy: false }));
 app.use(compression());
 app.use(cors({
-  origin: process.env.CLIENT_URL || 'http://localhost:3000',
+  origin: [
+    process.env.CLIENT_URL || 'http://localhost:3000',
+    'https://edy-9vfmt1von-pape-ndiogou-niangs-projects.vercel.app',
+    'https://edy-omega.vercel.app'
+  ],
   credentials: true
 }));
 app.use(rateLimit({ windowMs: 15 * 60 * 1000, max: 500, message: { success:false, message:'Too many requests' } }));
