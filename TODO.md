@@ -1,30 +1,22 @@
-# TODO - Déploiement DUNIS E-Learning (Railway + Vercel)
+# DUNIS API Route Prefix Fix
 
-## ✅ Étape 1: Corrections Problèmes Communs (ESLint, CORS, API 404)
-- [ ] Vérifier `CI=false` dans frontend/package.json (déjà OK)
-- [ ] Préparer .env templates pour CLIENT_URL et REACT_APP_API_URL
+## Current Status
+- [x] Analyzed api.js - identified double prefix on auth, missing on others
+- [x] Confirmed backend routes /api/*
+- [x] Searched for direct API calls - all use api.js utility
 
-## ✅ Étape 2: Préparation Locale + Test
-- [ ] Créer backend/.env avec MONGODB_URI, JWT_SECRET
-- [ ] `cd backend && npm install && npm run seed`
-- [ ] `cd frontend && npm install && npm start`
-- [ ] Tester http://localhost:3000 (login admin@dunis.africa / Admin@2024)
+## Plan Steps ✅ COMPLETED
+- [x] Edit frontend/src/utils/api.js - ALL 50+ endpoints fixed ✓
+  - [x] Auth: '/auth/*' (→ /api/auth/* via baseURL)
+  - [x] Courses/Users/Dashboard/Media/Site/Chatbot: all '/api/*' ✓
+- [x] Verified no direct axios calls (all use api.js)
 
-## ⏳ Étape 3: Déploiement Backend (Railway)
-- [ ] Créer compte railway.app
-- [ ] Deploy backend/ → Set env vars (MONGODB_URI, JWT_SECRET, CLIENT_URL=temp)
-- [ ] `railway run npm run seed`
-- [ ] Noter BACKEND_URL (e.g. https://dunis-backend.railway.app)
+## Next Steps
+- [ ] Test locally: cd frontend && npm run dev, test login
+- [ ] Deploy: git add . && git commit -m "fix(api): consistent /api prefixes for all endpoints" && git push
+- [ ] Production test: Login should hit /api/auth/login (no 404)
 
-## ⏳ Étape 4: Déploiement Frontend (Vercel)
-- [ ] Créer compte vercel.com
-- [ ] Deploy frontend/ → Set REACT_APP_API_URL=BACKEND_URL/api
-- [ ] Update Railway CLIENT_URL=VERCEL_URL
-
-## ⏳ Étape 5: Vérification Finale
-- [ ] Test login, créer course, chatbot
-- [ ] Health check: BACKEND_URL/api/health
-
-**Prochaine étape après confirmation: Commencer par corrections locales.**
-
-**Status: Plan approuvé - Problèmes courants à corriger en premier**
+## Next Steps
+- [ ] Test locally: npm run dev (frontend), login should work
+- [ ] Deploy: git add . && git commit -m "fix: api endpoint prefixes" && git push → Vercel redeploy
+- [ ] Verify production: https://edy-*.vercel.app login → no 404
