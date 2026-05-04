@@ -83,7 +83,7 @@ dunis-elearning/
 │   │   ├── learning.js        # Progress, assignments, quizzes, certificates, notifications
 │   │   ├── dashboard.js       # Student / Teacher / Admin dashboards
 │   │   ├── users.js           # Admin user management
-│   │   └── chatbot.js         # Claude AI assistant
+│   │   └── chatbot.js         # 
 │   ├── middleware/
 │   │   └── auth.js            # JWT protect + role authorize
 │   ├── utils/
