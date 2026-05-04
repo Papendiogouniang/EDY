@@ -45,7 +45,7 @@ DUNIS Africa E-Learning is a full-stack platform serving students, teachers, and
 | Progress tracking & completion % | ✅ | ✅ (view class) | ✅ |
 | Level system (Beginner→Expert) | ✅ | — | ✅ |
 | Certificates (auto-issued) | ✅ | — | ✅ |
-| AI chatbot (Claude) | ✅ | ✅ | ✅ |
+
 | Notifications (real-time) | ✅ | ✅ | ✅ |
 | User management | — | — | ✅ |
 
