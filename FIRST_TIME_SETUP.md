@@ -25,11 +25,7 @@ npm run seed
 
 This creates these accounts:
 
-| Role    | Email                        | Password      |
-|---------|------------------------------|---------------|
-| Admin   | admin@dunis.africa           | Admin@2024    |
-| Teacher | fatou.diallo@dunis.africa    | Teacher@2024  |
-| Student | aminata.sarr@dunis.africa    | Student@2024  |
+
 
 ## Step 3: Start the Backend
 
@@ -49,8 +45,7 @@ npm start     # runs on http://localhost:3000
 ## Step 5: Login as Admin
 
 Go to http://localhost:3000
-- Email: **admin@dunis.africa**
-- Password: **Admin@2024**
+
 
 ## Step 6: Create User Accounts
 
