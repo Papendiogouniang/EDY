@@ -114,3 +114,5 @@ export const saveAttendance  = (courseId, meetId, d) => API.post(`courses/${cour
 export const saveMeetRecording = (courseId, meetId, url) => API.put(`courses/${courseId}/meets/${meetId}/recording`, { recordingUrl: url });
 
 export const createUser = (d) => API.post('users', d);
+
+export default API;
