@@ -59,7 +59,7 @@ DUNIS Africa E-Learning is a full-stack platform serving students, teachers, and
 | Styling | Custom CSS with CSS variables (no framework) |
 | Backend | Node.js 18, Express 4 |
 | Database | MongoDB Atlas |
-| AI / Chatbot | Anthropic Claude (claude-sonnet) |
+| AI / Chatbot |  |
 | Authentication | JWT (JSON Web Tokens) |
 | Video | React Player (YouTube / Vimeo / direct) |
 | Container | Docker + Docker Compose |
