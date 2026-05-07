@@ -78,10 +78,10 @@ router.post('/admin/enroll', protect, authorize('admin'), async (req, res) => {
     if (!student) return res.status(404).json({ success: false, message: 'Student not found' });
     if (!course)  return res.status(404).json({ success: false, message: 'Course not found' });
 
-    const exists = await Enrollment.findOne({ student: studentId, course: courseId });
-    if (exists) return res.status(400).json({ success: false, message: `${student.firstName} is already enrolled` });
+      const exists = await Enrollment.findOne({ user: studentId, course: courseId });
+      if (exists) return res.status(400).json({ success: false, message: `${student.firstName} is already enrolled` });
 
-    await Enrollment.create({ student: studentId, course: courseId, enrolledBy: req.user._id });
+      await Enrollment.create({ user: studentId, course: courseId, enrolledBy: req.user._id });
     await Course.findByIdAndUpdate(courseId, { $addToSet: { enrolledStudents: studentId }, $inc: { enrollmentCount: 1 } });
     await User.findByIdAndUpdate(studentId, { $addToSet: { enrolledCourses: courseId } });
 
@@ -104,7 +104,7 @@ router.delete('/admin/enroll', protect, authorize('admin'), async (req, res) => 
     if (!mongoose.Types.ObjectId.isValid(studentId) || !mongoose.Types.ObjectId.isValid(courseId)) {
       return res.status(400).json({ success: false, message: 'Invalid IDs' });
     }
-    await Enrollment.findOneAndDelete({ student: studentId, course: courseId });
+    await Enrollment.findOneAndDelete({ user: studentId, course: courseId });
     await Course.findByIdAndUpdate(courseId, { $pull: { enrolledStudents: studentId }, $inc: { enrollmentCount: -1 } });
     await User.findByIdAndUpdate(studentId, { $pull: { enrolledCourses: courseId } });
     res.json({ success: true, message: 'Student removed from course' });
@@ -115,10 +115,10 @@ router.delete('/admin/enroll', protect, authorize('admin'), async (req, res) => 
 router.get('/admin/classes/:courseId/students', protect, authorize('admin'), async (req, res) => {
   try {
     const enrolled = await Enrollment.find({ course: req.params.courseId })
-      .populate('student', 'firstName lastName email studentId campus avatar level');
+      .populate('user', 'firstName lastName email studentId campus avatar level');
     const allStudents = await User.find({ role: 'student', isActive: true })
       .select('firstName lastName email studentId campus avatar level');
-    const enrolledIds = new Set(enrolled.map(e => e.student?._id?.toString()));
+    const enrolledIds = new Set(enrolled.map(e => e.user?._id?.toString()));
     const notEnrolled = allStudents.filter(s => !enrolledIds.has(s._id.toString()));
     res.json({ success: true, enrolled, notEnrolled });
   } catch (err) { res.status(500).json({ success: false, message: err.message }); }

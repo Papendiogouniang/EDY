@@ -39,7 +39,7 @@ router.get('/my', protect, authorize('teacher','admin'), async (req, res) => {
 // GET /api/courses/enrolled — Student's enrolled courses (with progress)
 router.get('/enrolled', protect, async (req, res) => {
   try {
-    const enrollments = await Enrollment.find({ student: req.user._id, status:{$ne:'dropped'} })
+    const enrollments = await Enrollment.find({ user: req.user._id, status:{$ne:'dropped'} })
       .populate({
         path: 'course',
         select: 'title description shortDesc category level language campus thumbnail duration lessons meets enrollmentCount rating isFree hasCertificate academicYear program',
@@ -162,11 +162,11 @@ router.post('/:id/meets', protect, authorize('teacher','admin'), async (req, res
 router.get('/:id/students', protect, authorize('teacher','admin'), async (req, res) => {
   try {
     const enrollments = await Enrollment.find({ course: req.params.id })
-      .populate('student','firstName lastName email avatar studentId campus program level totalPoints');
+      .populate('user','firstName lastName email avatar studentId campus program level totalPoints');
     const course = await Course.findById(req.params.id).select('lessons');
     const data = await Promise.all(enrollments.map(async enr => {
       const total = course.lessons.length;
-      const done  = await Progress.countDocuments({ student: enr.student?._id, course: req.params.id, completed: true });
+      const done  = await Progress.countDocuments({ student: enr.user?._id, course: req.params.id, completed: true });
       return { ...enr.toObject(), completionPercentage: total>0?Math.round(done/total*100):0, completedLessons: done, totalLessons: total };
     }));
     res.json({ success: true, students: data });
@@ -175,30 +175,84 @@ router.get('/:id/students', protect, authorize('teacher','admin'), async (req, r
 
 // POST /api/courses/:id/enroll — Enroll a student
 router.post('/:id/enroll', protect, async (req, res) => {
+  let studentId;
   try {
+    if (!req.user?._id) {
+      return res.status(401).json({ success: false, message: 'Unauthorized' });
+    }
     const courseId = req.params.id;
-    const studentId = req.body.studentId || req.user._id;
+
+    // If frontend sends studentId as null/undefined/empty, fallback to logged-in user.
+    const requestedStudentId = req.body?.studentId;
+    studentId = requestedStudentId ? requestedStudentId : req.user._id;
+
+    if (!studentId) {
+      return res.status(400).json({ success: false, message: 'studentId is required' });
+    }
+
     const course = await Course.findById(courseId);
     if (!course) return res.status(404).json({ success: false, message: 'Course not found' });
-    const exists = await Enrollment.findOne({ student: studentId, course: courseId });
-    if (exists) return res.status(400).json({ success: false, message: 'Already enrolled' });
-    const enrollment = await Enrollment.create({ student: studentId, course: courseId, enrolledBy: req.user._id });
-    await Course.findByIdAndUpdate(courseId, { $addToSet:{enrolledStudents:studentId}, $inc:{enrollmentCount:1} });
-    await User.findByIdAndUpdate(studentId, { $addToSet:{enrolledCourses:courseId} });
-    await Notification.create({
-      recipient: studentId, type: 'enrollment',
-      title: `Enrolled: ${course.title}`,
-      message: `Welcome to ${course.title}!`,
-      link: `/student/courses/${courseId}`
-    });
+
+    const exists = await Enrollment.findOne({ user: studentId, course: courseId });
+    if (exists) return res.status(200).json({ success: true, enrollment: exists, message: 'Already enrolled' });
+
+    let enrollment;
+    try {
+      enrollment = await Enrollment.create({ user: studentId, course: courseId, enrolledBy: req.user._id });
+    } catch (err) {
+      // Handle race conditions / double click when unique index exists.
+      if (err && err.code === 11000) {
+        const existing = await Enrollment.findOne({ user: studentId, course: courseId });
+        if (existing) return res.status(200).json({ success: true, enrollment: existing, message: 'Already enrolled' });
+      }
+      throw err;
+    }
+
+    // Side effects should not break enrollment (double-click / partial failures).
+    try {
+      await Course.findByIdAndUpdate(courseId, { $addToSet: { enrolledStudents: studentId }, $inc: { enrollmentCount: 1 } });
+    } catch (err) {
+      console.error('Enroll side-effect Course update failed:', { courseId, studentId, message: err?.message, code: err?.code });
+    }
+
+    try {
+      await User.findByIdAndUpdate(studentId, { $addToSet: { enrolledCourses: courseId } });
+    } catch (err) {
+      console.error('Enroll side-effect User update failed:', { courseId, studentId, message: err?.message, code: err?.code });
+    }
+
+    try {
+      await Notification.create({
+        recipient: studentId, type: 'enrollment',
+        title: `Enrolled: ${course.title}`,
+        message: `Welcome to ${course.title}!`,
+        link: `/student/courses/${courseId}`
+      });
+    } catch (err) {
+      console.error('Enroll side-effect Notification create failed:', { courseId, studentId, message: err?.message, code: err?.code });
+    }
+
     res.status(201).json({ success: true, enrollment });
-  } catch (err) { res.status(500).json({ success: false, message: err.message }); }
+  } catch (err) {
+    console.error('Enroll error:', {
+      courseId: req.params.id,
+      studentId,
+      code: err?.code,
+      message: err?.message,
+      stack: err?.stack
+    });
+    res.status(500).json({
+      success: false,
+      message: err?.message || 'Internal Server Error',
+      code: err?.code
+    });
+  }
 });
 
 // GET /api/courses/:id/enrollment-check
 router.get('/:id/enrollment-check', protect, async (req, res) => {
   try {
-    const enr = await Enrollment.findOne({ student: req.user._id, course: req.params.id });
+    const enr = await Enrollment.findOne({ user: req.user._id, course: req.params.id });
     res.json({ success: true, isEnrolled: !!enr, enrollment: enr });
   } catch (err) { res.status(500).json({ success: false, message: err.message }); }
 });

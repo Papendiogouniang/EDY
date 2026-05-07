@@ -9,7 +9,7 @@ const { protect, authorize } = require('../middleware/auth');
 router.get('/student', protect, async (req, res) => {
   try {
     const uid = req.user._id;
-    const enrollments = await Enrollment.find({ student:uid })
+    const enrollments = await Enrollment.find({ user:uid })
       .populate({ path:'course', populate:{ path:'teacher', select:'firstName lastName avatar' } });
 
     const active    = enrollments.filter(e=>e.status==='active').length;
@@ -54,7 +54,7 @@ router.get('/teacher', protect, authorize('teacher','admin'), async (req, res) =
     const uid = req.user._id;
     const myCourses = await Course.find({ teacher:uid });
     const courseIds = myCourses.map(c=>c._id);
-    const totalStudents   = await Enrollment.distinct('student', { course:{$in:courseIds} });
+    const totalStudents   = await Enrollment.distinct('user', { course:{$in:courseIds} });
     const pendingGrades   = await Submission.countDocuments({ course:{$in:courseIds}, status:'submitted' });
     const totalEnrollments= await Enrollment.countDocuments({ course:{$in:courseIds} });
 

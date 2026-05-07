@@ -20,7 +20,7 @@ router.post('/progress', protect, async (req, res) => {
     const pct    = total > 0 ? Math.round(done/total*100) : 0;
 
     if (done >= total) {
-      await Enrollment.findOneAndUpdate({ student:req.user._id, course:courseId }, { status:'completed', completedAt:new Date() });
+      await Enrollment.findOneAndUpdate({ user:req.user._id, course:courseId }, { status:'completed', completedAt:new Date() });
       const user = await User.findById(req.user._id);
       user.totalPoints += 100;
       user.updateLevel();

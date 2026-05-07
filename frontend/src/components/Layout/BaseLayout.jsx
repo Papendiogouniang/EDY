@@ -85,11 +85,6 @@ export default function BaseLayout({ navItems, role, accentColor }) {
               </Link>
             );
           })}
-          <button className={`nav-link ${chatOpen ? 'active' : ''}`} onClick={() => setChatOpen(!chatOpen)} title={collapsed ? 'AI Assistant' : ''}>
-            <FiMessageSquare size={19} />
-            {!collapsed && <span>AI Assistant</span>}
-            {!collapsed && <span className="nav-badge ai">AI</span>}
-          </button>
         </nav>
 
         <div className="sidebar-footer">
@@ -178,8 +173,8 @@ export default function BaseLayout({ navItems, role, accentColor }) {
         </main>
       </div>
 
-      {/* Chatbot */}
-      {chatOpen && <Chatbot onClose={() => setChatOpen(false)} userRole={role} />}
+      {/* Chatbot (disabled: removed AI Assistant UI) */}
+      {/* {chatOpen && <Chatbot onClose={() => setChatOpen(false)} userRole={role} />} */}
     </div>
   );
 }

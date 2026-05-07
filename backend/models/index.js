@@ -64,7 +64,7 @@ const certificateSchema = new mongoose.Schema({
 
 // ── Enrollment ────────────────────────────────────────────────────────────
 const enrollmentSchema = new mongoose.Schema({
-  student:    { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
+  user:       { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
   course:     { type: mongoose.Schema.Types.ObjectId, ref: 'Course', required: true },
   enrolledBy: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
   status:     { type: String, enum: ['active','completed','dropped','suspended'], default: 'active' },
@@ -72,7 +72,7 @@ const enrollmentSchema = new mongoose.Schema({
   enrolledAt: { type: Date, default: Date.now },
   completedAt:{ type: Date }
 }, { timestamps: true });
-enrollmentSchema.index({ student: 1, course: 1 }, { unique: true });
+enrollmentSchema.index({ user: 1, course: 1 }, { unique: true });
 
 // ── Progress ──────────────────────────────────────────────────────────────
 const progressSchema = new mongoose.Schema({

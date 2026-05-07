@@ -111,8 +111,9 @@
   position: absolute;
   top: 20px;
   right: 28px;
-  opacity: 0.18;
+  opacity: 0.22;
   pointer-events: none;
+  z-index: 999;
 }
 .welcome-card-logo img { height: 56px; width: auto; }
 
